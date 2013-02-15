@@ -1,0 +1,168 @@
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="span8"></div>
+  <div class="span4">    
+    <ul class="pager">
+      <li><%= link_to "Previous", Article.find_by_id(@article.previous_article_id) %></li>
+      <li><%= link_to "Next", Article.find_by_id(@article.next_article_id) %></li>
+    </ul>  
+  </div>
+</div>
+<% if @article.id == 1 %>
+  <div class="row">
+    <div class="span12">
+      <h2><%= @article.title %></h2>      
+    </div>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <p><%= @article.text %></p>
+    </div>
+
+    <div class="span6">
+      <%= video_tag("http://www.youtube.com/watch?v=yKWoPlL2B8I", :controls => true, :autobuffer => true, :autoplay => true, :size => "480x320") %> </video>
+      <p>
+        Lt Andy Neiman: "It's been a very trying time.. for all of those involved"
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span4"></div>
+    <div class="span4">
+      <% @article.images.each do |image| %>
+        <%= image_tag image.image_url %>
+      <% end %><br />
+      <span>
+        Christopher Dorner also had military experience
+      </span>
+    </div>
+    <div class="span4"></div>
+  </div>
+<% end %>
+<% if @article.id == 2 %>
+  <div class="row">
+    <div class="span12">
+      <h2><%= @article.title %></h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span2"></div>
+    <div class="span4">
+      <% @article.images.each do |image| %>
+        <%= image_tag image.image_url %>
+      <% end %>
+
+    </div>
+
+    <div class="span6">      
+      <p><%= @article.text %></p>
+    </div>
+  </div>
+<% end %>
+
+<% if @article.id == 3 %>
+  <div class="row">
+    <h1>Horsemeat scandal<h1>
+  </div>
+  <div class="row">
+    <div class="span12">
+      <h2><%= @article.title %></h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <% @article.images.each do |image| %>
+        <%= image_tag image.image_url %>
+      <% end %>
+      
+      <span>Owen Paterson said DNA testing will reassure consumers that the food they buy has been properly labelled
+      </span>
+    </div>
+
+    <div class="span6">      
+      <p><%= @article.text %></p>
+    </div>
+  </div>
+<% end %>
+<br />
+<hr />
+
+<div class="row">
+  <div class="span3">
+    <h4>Images</h2>
+    <% @article.images.each do |image| %>
+        <p>
+          <strong>Created_at:</strong>
+          <%= image.created_at %>
+        </p>
+
+        <p>
+          <strong>Image:</strong>
+          <%= image.image_url %>
+        </p>
+        <p>
+          <%= link_to 'Destroy Image', [image.article, image],
+                       :confirm => 'Are you sure?',
+                       :method => :delete %>
+        </p>
+    <% end %>
+  </div>
+
+  <div class="span3">
+    <h4>Add a image:</h2>
+    <%= form_for([@article, @article.images.build]) do |f| %>
+        <p style="display:none;">
+          <%= f.label :created_at %><br />
+          <%= f.datetime_select :created_at %>
+        </p>
+        <p>
+          <%= f.label :image_url %><br />
+          <%= f.text_field :image_url %>
+        </p>
+        <p>
+          <%= f.submit %>
+        </p>
+    <% end %>
+  </div>
+
+  <div class="span3">
+    <h4>Videos</h2>
+    <% @article.videos.each do |video| %>
+        <p>
+          <strong>Created_at:</strong>
+          <%= video.created_at %>
+        </p>
+
+        <p>
+          <strong>Video:</strong>
+          <%= video.video_url %>
+        </p>
+        <p>
+          <%= link_to 'Destroy Video', [video.article, video],
+                       :confirm => 'Are you sure?',
+                       :method => :delete %>
+        </p>
+    <% end %>
+  </div>
+
+  <div class="span3">
+    <h4>Add a video:</h2>
+    <%= form_for([@article, @article.videos.build]) do |f| %>
+        <p style="display:none;">
+          <%= f.label :created_at %><br />
+          <%= f.datetime_select :created_at %>
+        </p>
+        <p>
+          <%= f.label :video_url %><br />
+          <%= f.text_field :video_url %>
+        </p>
+        <p>
+          <%= f.submit %>
+        </p>
+    <% end %>
+  </div>
+</div>
+<hr />
+
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>
